@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Martin !</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <main class="card-wrapper">
+    <div class="card">
+
+      <!-- Top bar -->
+      <div class="card-topbar">
+        <span class="topbar-title">martin's page <span class="fox">🦊</span></span>
+        <div class="topbar-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <!-- LEFT -->
+        <div class="col-left">
+          <div class="name-block">
+            <h1 class="name">Martin<span class="exclaim">!</span></h1>
+            <div class="meta-pills">
+              <span>Singapore</span><span class="diamond">◇</span>
+              <span>INFJ-T</span><span class="diamond">◇</span>
+              <span>Taurus ♉</span><span class="diamond">◇</span>
+            </div>
+            <div class="dashed-divider"></div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-label">Areas of Study</div>
+            <div class="info-box-content">
+              Information &amp; Media Engineering / Information Security
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-label">Likes</div>
+            <div class="info-box-content likes-grid">
+              <span class="tag">K-pop</span><span class="tag">Rock</span>
+              <span class="tag">EDM</span><span class="tag">Phonk</span>
+              <span class="tag">Cafe Hopping</span><span class="tag">Food</span>
+              <span class="tag">Liminal Spaces</span><span class="tag">Monochrome</span>
+            </div>
+          </div>
+
+          <!-- Replace these src URLs with your actual manga/art images -->
+          <div class="manga-strip">
+            <div class="manga-panel" style="background-image:url('https://picsum.photos/seed/m1/150/100')"></div>
+            <div class="manga-panel" style="background-image:url('https://picsum.photos/seed/m2/150/100')"></div>
+            <div class="manga-panel" style="background-image:url('https://picsum.photos/seed/m3/150/100')"></div>
+            <div class="manga-overlay" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="col-right">
+
+          <!-- Replace src with your actual photo -->
+          <div class="profile-img-frame">
+            <img src="https://picsum.photos/seed/portrait/400/500" alt="Martin" width="400" height="500" loading="lazy" class="profile-img" />
+            <div class="glitch-layer glitch-r" aria-hidden="true"></div>
+            <div class="glitch-layer glitch-b" aria-hidden="true"></div>
+            <div class="speed-lines" aria-hidden="true"></div>
+          </div>
+
+          <div class="dashed-divider"></div>
+
+          <div class="info-box">
+            <div class="info-box-label">Hobbies</div>
+            <div class="info-box-content likes-grid">
+              <span class="tag">Dance</span><span class="tag">Photography</span>
+              <span class="tag">Cosplay</span><span class="tag">Gaming</span>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-label">Currently</div>
+            <div class="info-box-content currently-list">
+              <div class="currently-item"><span>🎮</span><span id="currently-playing">Persona 5 Royal</span></div>
+              <div class="currently-item"><span>🔨</span><span>Building OSINT Explorer</span></div>
+              <div class="currently-item"><span>📚</span><span>Learning Cryptography</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="dashed-divider" style="margin: 0 20px"></div>
+      <div class="projects-section">
+        <div class="section-label">Projects</div>
+        <div class="projects-grid">
+          <a href="https://YOUR-USERNAME.github.io/osint-explorer" target="_blank" rel="noopener noreferrer" class="project-card">
+            <span class="project-icon">🔍</span>
+            <div>
+              <div class="project-name">OSINT Explorer</div>
+              <div class="project-desc">Live OSINT tools directory</div>
+            </div>
+            <span class="project-arrow">↗</span>
+          </a>
+          <div class="project-card project-wip">
+            <span class="project-icon">🎨</span>
+            <div>
+              <div class="project-name">Digital Art</div>
+              <div class="project-desc">Photoshop / design work</div>
+            </div>
+            <span class="project-wip-badge">soon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="dashed-divider" style="margin: 0 20px"></div>
+      <div class="social-bar">
+        <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://open.spotify.com/user/YOUR_ID" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Spotify">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5-1 4-1 4 1 4 1M7 12s2-1.5 5-1.5 5 1.5 5 1.5M6.5 9s2.5-2 5.5-2 5.5 2 5.5 2"/></svg>
+        </a>
+        <a href="https://steamcommunity.com/id/YOUR_ID" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Steam">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 2.91 19.56l-2.8-1.14a2.5 2.5 0 0 1-4.54-.94L5.05 17.1A10 10 0 0 0 12 2zm0 1.5A8.5 8.5 0 1 1 3.5 12 8.51 8.51 0 0 1 12 3.5z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7H10v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+      </div>
+
+      <div class="card-footer">( made with &lt;3 )</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
