@@ -399,6 +399,197 @@ body {
 }
 .back-link:hover { color: var(--text); }
 
+/* ── Gallery page ── */
+.gallery-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+/* Photos are landscape — override the portrait aspect ratio from art-grid */
+.gallery-card {
+  aspect-ratio: 4/3;
+}
+
+.gallery-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.gallery-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: 14px;
+}
+
+/* Filter bar */
+.gallery-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.gallery-filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.gallery-filter-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+.gallery-filter-btn.active {
+  background: var(--text);
+  color: var(--card-bg);
+  border-color: var(--text);
+}
+
+/* Skeleton shimmer while loading */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton-card {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border: 1.5px solid var(--border);
+  aspect-ratio: 4/3;
+}
+
+
+/* ── Music Player ── */
+.music-player {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 220px;
+  background: var(--card-bg);
+  border: 2px solid var(--text);
+  box-shadow: 4px 4px 0 var(--text);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+  font-family: var(--font-mono);
+}
+
+.music-vinyl {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#222 0deg 10deg, #444 10deg 20deg);
+  border: 2px solid var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: animation 0.3s;
+}
+
+.music-vinyl.spinning {
+  animation: spin 3s linear infinite;
+}
+
+.vinyl-inner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 2px solid var(--text);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.music-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.music-title {
+  font-size: 0.75rem;
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-artist {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.music-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.music-progress {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width 0.5s linear;
+}
+
+.music-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.music-btn {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.1s;
+  box-shadow: 2px 2px 0 var(--text);
+}
+
+.music-btn:hover {
+  color: var(--text);
+  border-color: var(--text);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--text);
+}
+
+.music-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--text);
+}
+
+.music-btn-play {
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* Hide on mobile so it doesn't cover content */
+@media (max-width: 640px) {
+  .music-player { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

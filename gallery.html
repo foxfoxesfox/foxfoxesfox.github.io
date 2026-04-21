@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Martin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImg" src="" alt="" class="lightbox-img" />
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+  </div>
+
+  <main class="card-wrapper">
+
+    <a href="index.html" class="back-link">← martin's page 🦊</a>
+
+    <div class="card">
+      <div class="card-topbar">
+        <div class="topbar-nav">
+          <a href="projects.html" class="topbar-link">projects</a>
+          <span class="topbar-sep">·</span>
+          <a href="artworks.html" class="topbar-link">artworks</a>
+          <span class="topbar-sep">·</span>
+          <a href="gallery.html" class="topbar-link topbar-link-active">gallery</a>
+        </div>
+        <div class="topbar-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <h2 class="page-title">Gallery<span class="exclaim">.</span></h2>
+        <p class="page-subtitle">Photos I've taken.</p>
+        <div class="dashed-divider"></div>
+
+        <!-- Filter bar -->
+        <div id="filterBar" class="gallery-filter-bar" style="display:none">
+          <button class="gallery-filter-btn active" data-location="all">All</button>
+        </div>
+
+        <!-- Count -->
+        <div id="photoCount" class="gallery-count">Loading...</div>
+
+        <!-- Grid — populated by JS -->
+        <div id="photoGrid" class="art-grid gallery-grid">
+          <!-- Skeleton placeholders while loading -->
+          <div class="art-card skeleton-card"></div>
+          <div class="art-card skeleton-card"></div>
+          <div class="art-card skeleton-card"></div>
+          <div class="art-card skeleton-card"></div>
+          <div class="art-card skeleton-card"></div>
+          <div class="art-card skeleton-card"></div>
+        </div>
+
+      </div>
+
+      <div class="card-footer">@foxfoxesfox</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // ── Lightbox ──────────────────────────────────────────
+    function openLightbox(src, caption) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxCaption').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // ── Arrow key navigation in lightbox ─────────────────
+    let currentIndex = 0;
+    let currentPhotos = [];
+
+    function openLightboxAt(index) {
+      currentIndex = index;
+      const p = currentPhotos[index];
+      const caption = [p.title, p.location].filter(Boolean).join(' · ');
+      openLightbox('assets/photos/' + p.file, caption || p.file);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowRight') openLightboxAt((currentIndex + 1) % currentPhotos.length);
+      if (e.key === 'ArrowLeft')  openLightboxAt((currentIndex - 1 + currentPhotos.length) % currentPhotos.length);
+    });
+
+    // ── Load photos from manifest ─────────────────────────
+    async function loadGallery() {
+      const grid  = document.getElementById('photoGrid');
+      const count = document.getElementById('photoCount');
+      const filterBar = document.getElementById('filterBar');
+
+      let photos = [];
+      try {
+        const res = await fetch('assets/photos/photos.json');
+        if (!res.ok) throw new Error('manifest not found');
+        photos = await res.json();
+      } catch (err) {
+        grid.innerHTML = `<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.82rem;grid-column:1/-1;padding:20px 0">
+          No photos found. Add images to <code>assets/photos/</code> and update <code>photos.json</code>.
+        </p>`;
+        count.textContent = '';
+        return;
+      }
+
+      currentPhotos = photos;
+      count.textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''}`;
+
+      // Build location filter buttons if locations exist
+      const locations = [...new Set(photos.map(p => p.location).filter(Boolean))];
+      if (locations.length > 1) {
+        filterBar.style.display = 'flex';
+        locations.forEach(loc => {
+          const btn = document.createElement('button');
+          btn.className = 'gallery-filter-btn';
+          btn.dataset.location = loc;
+          btn.textContent = loc;
+          filterBar.appendChild(btn);
+        });
+        filterBar.addEventListener('click', e => {
+          const btn = e.target.closest('.gallery-filter-btn');
+          if (!btn) return;
+          filterBar.querySelectorAll('.gallery-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const loc = btn.dataset.location;
+          grid.querySelectorAll('.art-card:not(.skeleton-card)').forEach(card => {
+            card.style.display = (loc === 'all' || card.dataset.location === loc) ? '' : 'none';
+          });
+        });
+      }
+
+      // Render cards
+      grid.innerHTML = '';
+      photos.forEach((photo, i) => {
+        const caption = [photo.title, photo.location].filter(Boolean).join(' · ');
+        const card = document.createElement('div');
+        card.className = 'art-card gallery-card';
+        card.dataset.location = photo.location || '';
+        card.innerHTML = `
+          <img
+            src="assets/photos/${photo.file}"
+            alt="${photo.title || photo.file}"
+            loading="lazy"
+            class="art-img gallery-img"
+          />
+          <div class="art-overlay">
+            ${photo.title    ? `<div class="art-title">${photo.title}</div>` : ''}
+            ${photo.location ? `<div class="art-sub">${photo.location}</div>` : ''}
+          </div>
+        `;
+        card.addEventListener('click', () => openLightboxAt(i));
+        grid.appendChild(card);
+      });
+    }
+
+    loadGallery();
+  </script>
+
+</body>
+</html>
