@@ -76,9 +76,9 @@
             <div class="manga-panel" style="background-image:url('https://picsum.photos/seed/m3/150/100')"></div>
             <div class="manga-overlay" aria-hidden="true"></div>
           </div>
-          <!-- Dino Game -->
+          <!-- Pong Game -->
           <div class="dino-box">
-            <canvas id="dinoCanvas" width="380" height="80"></canvas>
+            <canvas id="pongCanvas" width="380" height="80"></canvas>
           </div>
 
         </div>
@@ -158,191 +158,147 @@
   </main>
 
   <script src="script.js"></script>
+  <!-- infinite pong-->
   <script>
-    // ── Dino endless loop ─────────────────────────────────
-    (function() {
-      const canvas = document.getElementById('dinoCanvas');
+    (function () {
+      const canvas = document.getElementById('pongCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
 
       const W = 380, H = 80;
       canvas.width = W; canvas.height = H;
 
-      // Colors pulled from CSS variables via computed style
-      const style   = getComputedStyle(document.documentElement);
-      const CLR_FG  = style.getPropertyValue('--text').trim()     || '#1a1a1a';
-      const CLR_BG  = style.getPropertyValue('--card-bg').trim()  || '#f9f8f5';
-      const CLR_MUT = style.getPropertyValue('--text-muted').trim()|| '#888';
+      const st = getComputedStyle(document.documentElement);
+      const FG  = st.getPropertyValue('--text').trim()      || '#1a1a1a';
+      const BG  = st.getPropertyValue('--card-bg').trim()   || '#f9f8f5';
+      const MUT = st.getPropertyValue('--text-muted').trim()|| '#999';
 
-      // Ground
-      const GROUND = H - 14;
+      const PAD_W = 5, PAD_H = 22, PAD_SPEED = 2.4;
+      const BALL  = 5;
 
-      // Dino
-      const dino = {
-        x: 36, y: GROUND, w: 16, h: 20,
-        vy: 0, onGround: true,
-        legPhase: 0
+      const state = {
+        l: { y: H / 2 - PAD_H / 2, score: 0 },
+        r: { y: H / 2 - PAD_H / 2, score: 0 },
+        ball: {
+          x: W / 2, y: H / 2,
+          vx: 2.6 * (Math.random() > 0.5 ? 1 : -1),
+          vy: 1.6 * (Math.random() > 0.5 ? 1 : -1)
+        }
       };
 
-      // Cacti pool
-      const cacti = [];
-      let spawnTimer = 90;
-
-      // Clouds
-      const clouds = [
-        { x: 200, y: 16, w: 36, h: 8 },
-        { x: 320, y: 22, w: 28, h: 6 }
-      ];
-
-      // Ground dots (parallax pebbles)
-      const pebbles = Array.from({ length: 10 }, (_, i) => ({
-        x: i * 40 + Math.random() * 20, y: GROUND + 6, r: 1 + Math.random()
-      }));
-
-      let frame = 0;
-      const SPEED = 2.8;
-      const JUMP_V = -7.5;
-      const GRAVITY = 0.45;
-
-      function spawnCactus() {
-        const h = 14 + Math.floor(Math.random() * 10);
-        const w = 8 + Math.floor(Math.random() * 6);
-        const twin = Math.random() > 0.6;
-        cacti.push({ x: W + 10, y: GROUND - h + dino.h, w: twin ? w + 10 : w, h, twin });
+      function resetBall(dir) {
+        state.ball.x  = W / 2;
+        state.ball.y  = H / 2;
+        state.ball.vx = 2.6 * dir;
+        state.ball.vy = 1.6 * (Math.random() > 0.5 ? 1 : -1);
       }
 
-      function jump() {
-        if (dino.onGround) {
-          dino.vy = JUMP_V;
-          dino.onGround = false;
-        }
+      // AI paddle — tracks ball with a slight lag for realism
+      function moveAI(pad, targetY) {
+        const center = pad.y + PAD_H / 2;
+        if (center < targetY - 2) pad.y += PAD_SPEED;
+        else if (center > targetY + 2) pad.y -= PAD_SPEED;
+        pad.y = Math.max(0, Math.min(H - PAD_H, pad.y));
       }
 
-      // Auto-jump when cactus is close
-      function autoJump() {
-        for (const c of cacti) {
-          const dist = c.x - (dino.x + dino.w);
-          if (dist > 0 && dist < 58 + Math.random() * 20) {
-            jump();
-          }
-        }
-      }
-
-      function drawPixelRect(x, y, w, h, color) {
+      function drawPixel(x, y, w, h, color) {
         ctx.fillStyle = color;
         ctx.fillRect(Math.round(x), Math.round(y), w, h);
       }
 
-      function drawDino() {
-        const x = dino.x, y = dino.y - dino.h;
-        // Body
-        drawPixelRect(x + 2, y + 4, 12, 10, CLR_FG);
-        // Head
-        drawPixelRect(x + 6, y, 10, 8, CLR_FG);
-        // Eye
-        drawPixelRect(x + 13, y + 1, 2, 2, CLR_BG);
-        // Neck bump
-        drawPixelRect(x + 4, y + 2, 4, 6, CLR_FG);
-        // Tail
-        drawPixelRect(x, y + 8, 4, 4, CLR_FG);
-        drawPixelRect(x - 2, y + 10, 3, 3, CLR_FG);
-        // Legs — alternate when on ground
-        if (dino.onGround) {
-          const phase = Math.floor(frame / 6) % 2;
-          if (phase === 0) {
-            drawPixelRect(x + 4, y + 14, 4, 6, CLR_FG);
-            drawPixelRect(x + 9, y + 14, 4, 4, CLR_FG);
-          } else {
-            drawPixelRect(x + 4, y + 14, 4, 4, CLR_FG);
-            drawPixelRect(x + 9, y + 14, 4, 6, CLR_FG);
-          }
-        } else {
-          // Mid-air — legs tucked
-          drawPixelRect(x + 4, y + 14, 4, 4, CLR_FG);
-          drawPixelRect(x + 9, y + 14, 4, 4, CLR_FG);
+      function drawDashedNet() {
+        ctx.fillStyle = MUT;
+        ctx.globalAlpha = 0.35;
+        for (let y = 4; y < H; y += 10) {
+          ctx.fillRect(W / 2 - 1, y, 2, 5);
         }
+        ctx.globalAlpha = 1;
       }
 
-      function drawCactus(c) {
-        // Main stem
-        drawPixelRect(c.x + 2, c.y, 6, c.h, CLR_FG);
-        // Arms
-        drawPixelRect(c.x,     c.y + 4, 4, 3, CLR_FG);
-        drawPixelRect(c.x,     c.y + 1, 3, 5, CLR_FG);
-        drawPixelRect(c.x + 6, c.y + 6, 4, 3, CLR_FG);
-        drawPixelRect(c.x + 7, c.y + 3, 3, 5, CLR_FG);
-        if (c.twin) {
-          drawPixelRect(c.x + 12, c.y + 2, 5, c.h - 2, CLR_FG);
-          drawPixelRect(c.x + 10, c.y + 5, 3, 3, CLR_FG);
-        }
-      }
-
-      function drawCloud(c) {
-        ctx.fillStyle = CLR_MUT;
-        ctx.globalAlpha = 0.25;
-        ctx.fillRect(Math.round(c.x), Math.round(c.y), c.w, c.h);
-        ctx.fillRect(Math.round(c.x + 6), Math.round(c.y - 4), c.w - 12, c.h);
+      function drawScore() {
+        ctx.fillStyle = MUT;
+        ctx.globalAlpha = 0.5;
+        ctx.font = `bold 14px var(--font-mono, monospace)`;
+        ctx.textAlign = 'center';
+        ctx.fillText(state.l.score, W / 2 - 30, 14);
+        ctx.fillText(state.r.score, W / 2 + 30, 14);
         ctx.globalAlpha = 1;
       }
 
       function loop() {
-        frame++;
-        ctx.clearRect(0, 0, W, H);
+        // Clear
+        ctx.fillStyle = BG;
+        ctx.fillRect(0, 0, W, H);
 
-        // Ground line
-        ctx.fillStyle = CLR_FG;
-        ctx.fillRect(0, GROUND, W, 1);
+        drawDashedNet();
+        drawScore();
 
-        // Pebbles scroll
-        for (const p of pebbles) {
-          p.x -= SPEED * 0.6;
-          if (p.x < -4) p.x = W + 4;
-          ctx.fillStyle = CLR_MUT;
-          ctx.globalAlpha = 0.4;
-          ctx.beginPath();
-          ctx.arc(Math.round(p.x), p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.globalAlpha = 1;
+        const b = state.ball;
+
+        // Move ball
+        b.x += b.vx;
+        b.y += b.vy;
+
+        // Top / bottom bounce
+        if (b.y - BALL / 2 <= 0) { b.y = BALL / 2; b.vy *= -1; }
+        if (b.y + BALL / 2 >= H) { b.y = H - BALL / 2; b.vy *= -1; }
+
+        // AI moves both paddles
+        moveAI(state.l, b.y);
+        moveAI(state.r, b.y);
+
+        // Left paddle collision
+        if (
+          b.x - BALL / 2 <= PAD_W + 6 &&
+          b.y >= state.l.y &&
+          b.y <= state.l.y + PAD_H
+        ) {
+          b.x = PAD_W + 6 + BALL / 2;
+          b.vx = Math.abs(b.vx) * 1.03; // slight speed-up each hit
+          // Add spin based on where ball hits paddle
+          const hitPos = (b.y - (state.l.y + PAD_H / 2)) / (PAD_H / 2);
+          b.vy = hitPos * 3.2;
         }
 
-        // Clouds scroll
-        for (const c of clouds) {
-          c.x -= 0.5;
-          if (c.x + c.w < 0) c.x = W + 10;
-          drawCloud(c);
+        // Right paddle collision
+        if (
+          b.x + BALL / 2 >= W - PAD_W - 6 &&
+          b.y >= state.r.y &&
+          b.y <= state.r.y + PAD_H
+        ) {
+          b.x = W - PAD_W - 6 - BALL / 2;
+          b.vx = -Math.abs(b.vx) * 1.03;
+          const hitPos = (b.y - (state.r.y + PAD_H / 2)) / (PAD_H / 2);
+          b.vy = hitPos * 3.2;
         }
 
-        // Physics
-        if (!dino.onGround) {
-          dino.vy += GRAVITY;
-          dino.y  += dino.vy;
-          if (dino.y >= GROUND) {
-            dino.y = GROUND;
-            dino.vy = 0;
-            dino.onGround = true;
-          }
+        // Cap speed so it doesn't get too crazy
+        const maxSpeed = 6;
+        if (Math.abs(b.vx) > maxSpeed) b.vx = maxSpeed * Math.sign(b.vx);
+        if (Math.abs(b.vy) > maxSpeed) b.vy = maxSpeed * Math.sign(b.vy);
+
+        // Score — ball exits left or right
+        if (b.x < 0) {
+          state.r.score++;
+          resetBall(1);
+        }
+        if (b.x > W) {
+          state.l.score++;
+          resetBall(-1);
         }
 
-        autoJump();
+        // Draw paddles
+        drawPixel(6,         state.l.y, PAD_W, PAD_H, FG);
+        drawPixel(W - 6 - PAD_W, state.r.y, PAD_W, PAD_H, FG);
 
-        // Cacti
-        spawnTimer--;
-        if (spawnTimer <= 0) {
-          spawnCactus();
-          spawnTimer = 70 + Math.floor(Math.random() * 60);
-        }
-        for (let i = cacti.length - 1; i >= 0; i--) {
-          cacti[i].x -= SPEED;
-          drawCactus(cacti[i]);
-          if (cacti[i].x + cacti[i].w < 0) cacti.splice(i, 1);
-        }
+        // Draw ball (pixelated square)
+        drawPixel(b.x - BALL / 2, b.y - BALL / 2, BALL, BALL, FG);
 
-        drawDino();
         requestAnimationFrame(loop);
       }
 
       loop();
     })();
-  </script>
+    </script>
 </body>
 </html>

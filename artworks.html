@@ -78,7 +78,7 @@
     function openLightboxAt(index) {
       currentIndex = index;
       const item = currentItems[index];
-      document.getElementById('lightboxImg').src = 'assets/' + item.file;
+      document.getElementById('lightboxImg').src = 'assets/artworks/' + item.file;
       document.getElementById('lightboxCaption').textContent = [item.title, item.sub].filter(Boolean).join(' · ');
       document.getElementById('lightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -105,7 +105,7 @@
         const card = document.createElement('div');
         card.className = 'art-card';
         card.innerHTML = `
-          <img src="assets/${item.file}" alt="${item.title}" loading="lazy" class="art-img" />
+          <img src="assets/artworks/${item.file}" alt="${item.title}" loading="lazy" class="art-img" />
           <div class="art-overlay">
             <div class="art-title">${item.title}</div>
             ${item.sub ? `<div class="art-sub">${item.sub}</div>` : ''}
