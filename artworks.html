@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artworks — Martin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImg" src="" alt="" class="lightbox-img" />
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+  </div>
+
+  <main class="card-wrapper">
+    <div class="card">
+
+      <!-- Topbar -->
+      <div class="card-topbar">
+        <a href="index.html" class="topbar-title topbar-back">← martin's page <span class="fox">🦊</span></a>
+        <div class="topbar-nav">
+          <a href="projects.html" class="topbar-link">projects</a>
+          <span class="topbar-sep">·</span>
+          <a href="artworks.html" class="topbar-link topbar-link-active">artworks</a>
+        </div>
+        <div class="topbar-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <h2 class="page-title">Artworks<span class="exclaim">.</span></h2>
+        <p class="page-subtitle">Digital &amp; physical work.</p>
+        <div class="dashed-divider"></div>
+
+        <!-- Digital -->
+        <div class="section-label" style="margin-bottom:14px">Digital</div>
+        <div class="art-grid art-grid-digital">
+          <div class="art-card art-card-featured" onclick="openLightbox('assets/concept-2-digital-poster.jpg','Concept 2 — A3 Digital Poster')">
+            <img src="assets/concept-2-digital-poster.jpg" alt="Concept 2 A3 Digital Poster" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">Concept 2 — A3 Digital Poster</div>
+              <div class="art-sub">Photoshop · sRGB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashed-divider"></div>
+
+        <!-- Physical -->
+        <div class="section-label" style="margin-bottom:14px">Physical</div>
+        <div class="art-grid">
+
+          <div class="art-card" onclick="openLightbox('assets/creature1.jpg','Creature Study')">
+            <img src="assets/creature1.jpg" alt="Creature Study" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">Creature Study</div>
+              <div class="art-sub">Physical · Photography</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/portrait2.jpg','Portrait II')">
+            <img src="assets/portrait2.jpg" alt="Portrait II" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">Portrait II</div>
+              <div class="art-sub">Physical · Photography</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/portrait3.jpg','Portrait III')">
+            <img src="assets/portrait3.jpg" alt="Portrait III" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">Portrait III</div>
+              <div class="art-sub">Physical · Photography</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/draft1and2.jpg','Draft 1 &amp; 2')">
+            <img src="assets/draft1and2.jpg" alt="Draft 1 and 2" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">Draft 1 &amp; 2</div>
+              <div class="art-sub">Physical · Photography</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/final-dayandnight.jpg','Final — Day &amp; Night')">
+            <img src="assets/final-dayandnight.jpg" alt="Final Day and Night" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">Final — Day &amp; Night</div>
+              <div class="art-sub">Physical · Photography</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3601.jpg','IMG 3601')">
+            <img src="assets/img-3601.jpg" alt="IMG 3601" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3601</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3603.jpg','IMG 3603')">
+            <img src="assets/img-3603.jpg" alt="IMG 3603" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3603</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3605.jpg','IMG 3605')">
+            <img src="assets/img-3605.jpg" alt="IMG 3605" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3605</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3609.jpg','IMG 3609')">
+            <img src="assets/img-3609.jpg" alt="IMG 3609" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3609</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3611.jpg','IMG 3611')">
+            <img src="assets/img-3611.jpg" alt="IMG 3611" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3611</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3612.jpg','IMG 3612')">
+            <img src="assets/img-3612.jpg" alt="IMG 3612" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3612</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3613.jpg','IMG 3613')">
+            <img src="assets/img-3613.jpg" alt="IMG 3613" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3613</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3615.jpg','IMG 3615')">
+            <img src="assets/img-3615.jpg" alt="IMG 3615" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3615</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3616.jpg','IMG 3616')">
+            <img src="assets/img-3616.jpg" alt="IMG 3616" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3616</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+          <div class="art-card" onclick="openLightbox('assets/img-3617.jpg','IMG 3617')">
+            <img src="assets/img-3617.jpg" alt="IMG 3617" loading="lazy" class="art-img" />
+            <div class="art-overlay">
+              <div class="art-title">IMG 3617</div>
+              <div class="art-sub">Physical</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card-footer">( made with &lt;3 )</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    function openLightbox(src, caption) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxCaption').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+
+</body>
+</html>
