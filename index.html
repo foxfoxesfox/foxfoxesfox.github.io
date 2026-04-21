@@ -144,26 +144,32 @@
             </a>
           </div>
 
+          <!-- Spotify Player -->
+          <iframe
+            data-testid="embed-iframe"
+            style="
+              position: fixed;
+              bottom: 24px;
+              left: 24px;
+              z-index: 100;
+              border-radius: 4px;
+              border: 2px solid var(--text);
+              box-shadow: 4px 4px 0 var(--text);
+              width: 260px;
+              height: 152px;
+              display: block;
+            "
+            src="https://open.spotify.com/embed/playlist/2G7wh7QJz59lmUdeu3f8L8?utm_source=generator&theme=0"
+            frameborder="0"
+            allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+
           <div class="card-footer">@foxfoxesfox</div>
           </div>
       </div>
     </div>
-    <!-- Spotify Player -->
-
-    <iframe data-testid="embed-iframe" style="border-radius:12px" 
-    src="https://open.spotify.com/embed/playlist/2G7wh7QJz59lmUdeu3f8L8?utm_source=generator&theme=0" 
-    width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-    </iframe>
-    
-    <iframe
-      style="border-radius:4px; border: 2px solid var(--text); box-shadow: 4px 4px 0 var(--text); position:fixed; bottom:24px; left:24px; z-index:100;"
-      src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID?utm_source=generator&theme=0"
-      width="260" height="152" frameborder="0"
-      allowfullscreen=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy">
-    </iframe>
-
   </main>
 
   <script src="script.js"></script>
