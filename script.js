@@ -43,14 +43,14 @@ if (currentTextEl && currentIconEl) {
   let idx = 0;
 
   function typeText(status, cb) {
-    currentIconEl.textContent = status.icon; // Swap the icon
-    currentTextEl.textContent = '';          // Clear text
+    currentIconEl.textContent = status.icon;
+    currentTextEl.textContent = '';
     let i = 0;
     const t = setInterval(() => {
       currentTextEl.textContent += status.text[i++];
-      if (i >= status.text.length) { 
-        clearInterval(t); 
-        setTimeout(cb, 2500); // Wait 2.5 seconds before erasing
+      if (i >= status.text.length) {
+        clearInterval(t);
+        setTimeout(cb, 2500);
       }
     }, 60);
   }
@@ -58,9 +58,9 @@ if (currentTextEl && currentIconEl) {
   function eraseText(cb) {
     const t = setInterval(() => {
       currentTextEl.textContent = currentTextEl.textContent.slice(0, -1);
-      if (!currentTextEl.textContent.length) { 
-        clearInterval(t); 
-        cb(); 
+      if (!currentTextEl.textContent.length) {
+        clearInterval(t);
+        cb();
       }
     }, 35);
   }
@@ -70,22 +70,19 @@ if (currentTextEl && currentIconEl) {
     eraseText(() => typeText(statuses[idx], cycle));
   }
 
-  // Start the cycle 3 seconds after page load
   setTimeout(cycle, 3000);
 }
 
-// Subtle card tilt on mouse move
+// Card pop-in on load
 const card = document.querySelector('.card');
-if (card && window.matchMedia('(pointer: fine)').matches) {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
-    const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
-    card.style.transform = `perspective(1000px) rotateY(${dx * 2}deg) rotateX(${-dy * 2}deg)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
-    card.style.transform  = '';
-    setTimeout(() => card.style.transition = '', 500);
+if (card) {
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(20px)';
+  card.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    });
   });
 }
