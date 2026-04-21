@@ -53,10 +53,13 @@
           </div>
 
           <div class="info-box">
-            <ul class="study-list">
-              <li>Information Engineering &amp; Media</li>
-              <li>Information Security</li>
-            </ul>
+            <div class="info-box-label">Areas of Study</div>
+            <div class="info-box-content">
+              <ul class="study-list">
+                <li>Information Engineering &amp; Media</li>
+                <li>Information Security</li>
+              </ul>
+            </div>
           </div>
 
           <div class="info-box">
@@ -290,6 +293,34 @@
 
       loop();
     })();
+    </script>
+
+    <!-- loading commitments-->
+    <script>
+      async function loadCommitments() {
+        const grid = document.getElementById('commitmentsGrid');
+        try {
+          const res = await fetch('assets/commitments.json');
+          if (!res.ok) throw new Error();
+          const items = await res.json();
+
+          grid.innerHTML = items.map(item => `
+            <div class="commitment-item">
+              <span class="commitment-icon">${item.icon}</span>
+              <div class="commitment-body">
+                <div class="commitment-role">${item.role}</div>
+                <div class="commitment-org">${item.org}</div>
+                <div class="commitment-date">${item.date}</div>
+              </div>
+            </div>
+          `).join('');
+
+        } catch {
+          grid.innerHTML = `<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.82rem">Could not load commitments.</p>`;
+        }
+      }
+
+      loadCommitments();
     </script>
 </body>
 </html>
