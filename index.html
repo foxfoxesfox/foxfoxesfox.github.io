@@ -25,6 +25,8 @@
           <a href="projects.html" class="topbar-link">projects</a>
           <span class="topbar-sep">·</span>
           <a href="artworks.html" class="topbar-link">artworks</a>
+          <span class="topbar-sep">·</span>
+          <a href="gallery.html" class="topbar-link">gallery</a>
         </div>
         <div class="topbar-dots">
           <span class="dot dot-red"></span>
@@ -146,26 +148,23 @@
           </div>
       </div>
     </div>
-  </main>
+    <!-- Spotify Player -->
 
-  <!-- Music Player Widget -->
-  <div class="music-player" id="musicPlayer">
-    <div class="music-vinyl" id="musicVinyl">
-      <div class="vinyl-inner"></div>
-    </div>
-    <div class="music-info">
-      <div class="music-title" id="musicTitle">Beneath the Mask</div>
-      <div class="music-artist" id="musicArtist">Shoji Meguro</div>
-      <div class="music-bar">
-        <div class="music-progress" id="musicProgress"></div>
-      </div>
-    </div>
-    <div class="music-controls">
-      <button class="music-btn" id="musicPrev" aria-label="Previous">&#9664;&#9664;</button>
-      <button class="music-btn music-btn-play" id="musicPlay" aria-label="Play">&#9654;</button>
-      <button class="music-btn" id="musicNext" aria-label="Next">&#9654;&#9654;</button>
-    </div>
-  </div>
+    <iframe data-testid="embed-iframe" style="border-radius:12px" 
+    src="https://open.spotify.com/embed/playlist/2G7wh7QJz59lmUdeu3f8L8?utm_source=generator&theme=0" 
+    width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+    </iframe>
+    
+    <iframe
+      style="border-radius:4px; border: 2px solid var(--text); box-shadow: 4px 4px 0 var(--text); position:fixed; bottom:24px; left:24px; z-index:100;"
+      src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID?utm_source=generator&theme=0"
+      width="260" height="152" frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+
+  </main>
 
   <script src="script.js"></script>
 </body>
