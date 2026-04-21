@@ -387,6 +387,18 @@ body {
   .art-grid-digital { grid-template-columns: 1fr; }
 }
 
+/* ── Back link (above card on sub-pages) ── */
+.back-link {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--text); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
