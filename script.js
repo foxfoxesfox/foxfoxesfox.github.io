@@ -30,30 +30,48 @@ if (nameEl) {
   });
 }
 
-// Typing cycle on "Currently Playing"
-const playingEl = document.getElementById('currently-playing');
-if (playingEl) {
-  const games = ['Persona 5 Royal', 'Initial D', 'Resident Evil', 'Security Breach'];
+// Typing cycle on "Currently"
+const currentTextEl = document.getElementById('currently-text');
+const currentIconEl = document.getElementById('currently-icon');
+
+if (currentTextEl && currentIconEl) {
+  const statuses = [
+    { icon: '📚', text: 'Year 3 @ NTU' },
+    { icon: '🔨', text: 'Looking for Internship (PA)' },
+    { icon: '🎮', text: 'Playing Overwatch' }
+  ];
   let idx = 0;
 
-  function typeText(el, text, cb) {
-    el.textContent = ''; let i = 0;
+  function typeText(status, cb) {
+    currentIconEl.textContent = status.icon; // Swap the icon
+    currentTextEl.textContent = '';          // Clear text
+    let i = 0;
     const t = setInterval(() => {
-      el.textContent += text[i++];
-      if (i >= text.length) { clearInterval(t); setTimeout(cb, 2000); }
+      currentTextEl.textContent += status.text[i++];
+      if (i >= status.text.length) { 
+        clearInterval(t); 
+        setTimeout(cb, 2500); // Wait 2.5 seconds before erasing
+      }
     }, 60);
   }
-  function eraseText(el, cb) {
+
+  function eraseText(cb) {
     const t = setInterval(() => {
-      el.textContent = el.textContent.slice(0, -1);
-      if (!el.textContent.length) { clearInterval(t); cb(); }
+      currentTextEl.textContent = currentTextEl.textContent.slice(0, -1);
+      if (!currentTextEl.textContent.length) { 
+        clearInterval(t); 
+        cb(); 
+      }
     }, 35);
   }
+
   function cycle() {
-    idx = (idx + 1) % games.length;
-    eraseText(playingEl, () => typeText(playingEl, games[idx], cycle));
+    idx = (idx + 1) % statuses.length;
+    eraseText(() => typeText(statuses[idx], cycle));
   }
-  setTimeout(() => eraseText(playingEl, () => typeText(playingEl, games[0], cycle)), 3000);
+
+  // Start the cycle 3 seconds after page load
+  setTimeout(cycle, 3000);
 }
 
 // Subtle card tilt on mouse move
