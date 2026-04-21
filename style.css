@@ -479,10 +479,14 @@ body {
   height: 120px;
   image-rendering: pixelated;
 }
-.commitments-grid {
-  display: grid;
+
+.commitments-full {
   margin: 0 20px 14px 20px;
   box-sizing: border-box;
+}
+
+.commitments-grid {
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 14px;
 }
