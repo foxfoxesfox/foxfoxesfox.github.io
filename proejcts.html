@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Martin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <main class="card-wrapper">
+    <div class="card">
+
+      <!-- Top bar -->
+      <div class="card-topbar">
+        <a href="index.html" class="topbar-title topbar-back">← martin's page <span class="fox">🦊</span></a>
+        <div class="topbar-nav">
+          <a href="projects.html" class="topbar-link topbar-link-active">projects</a>
+          <span class="topbar-sep">·</span>
+          <a href="artworks.html" class="topbar-link">artworks</a>
+        </div>
+        <div class="topbar-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+      </div>
+
+      <!-- Page content -->
+      <div class="page-content">
+        <h2 class="page-title">Projects<span class="exclaim">.</span></h2>
+        <p class="page-subtitle">Things I've built.</p>
+        <div class="dashed-divider"></div>
+
+        <!-- Featured: OSINT Explorer -->
+        <div class="featured-project">
+          <div class="featured-badge">Featured</div>
+          <div class="featured-body">
+            <div class="featured-text">
+              <div class="featured-title">
+                🔍 OSINT Explorer
+              </div>
+              <p class="featured-desc">
+                An auto-updating open-source intelligence directory, powered by the
+                <a href="https://github.com/jivoi/awesome-osint" target="_blank" rel="noopener noreferrer">awesome-osint</a>
+                repository. Built with vanilla HTML, CSS, and JavaScript — features
+                live GitHub API fetching, category filtering, sortable columns, and a
+                feedback form.
+              </p>
+              <div class="featured-tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">GitHub API</span>
+                <span class="tag">Formspree</span>
+              </div>
+              <div class="featured-links">
+                <a href="https://YOUR-USERNAME.github.io/osint-explorer" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                  Live Demo ↗
+                </a>
+                <a href="https://github.com/YOUR-USERNAME/osint-explorer" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+                  View on GitHub
+                </a>
+              </div>
+            </div>
+            <div class="featured-preview">
+              <!-- Replace with a real screenshot of OSINT Explorer if you have one -->
+              <div class="preview-placeholder">
+                <span class="preview-label">osint-explorer</span>
+                <div class="preview-lines">
+                  <div class="pline pline-green"></div>
+                  <div class="pline"></div>
+                  <div class="pline pline-short"></div>
+                  <div class="pline"></div>
+                  <div class="pline pline-med"></div>
+                  <div class="pline pline-short"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashed-divider"></div>
+
+        <!-- GitHub section -->
+        <div class="github-section">
+          <div class="section-label">More on GitHub</div>
+          <a href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener noreferrer" class="github-card">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <div>
+              <div class="github-card-title">github.com/YOUR-USERNAME</div>
+              <div class="github-card-sub">View all repositories and contributions</div>
+            </div>
+            <span style="margin-left:auto">↗</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="card-footer">( made with &lt;3 )</div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
