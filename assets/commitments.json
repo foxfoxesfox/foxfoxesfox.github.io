@@ -1,20 +1,44 @@
 [
   {
-    "icon": "💻",
-    "role": "Member",
-    "org": "Open Source Society — NTU",
-    "date": "Aug 2024 — Present"
+    "icon": "🦊",
+    "role": "Student Mentor",
+    "org": "Student Mentor Programme — NYP",
+    "date": "Mar 2018 - Mar 2019"
   },
-  {
-    "icon": "🎨",
-    "role": "Design Team",
-    "org": "Media Club — NTU",
-    "date": "Jan 2025 — Present"
-  },
+
   {
     "icon": "🦊",
-    "role": "Freelance Digital Artist",
-    "org": "Self-employed",
-    "date": "Jun 2023 — Present"
+    "role": "Class Representative",
+    "org": "SEG Class Roles - NYP",
+    "date": "Apr 2018 - Mar 2019"
+  },
+
+  {
+    "icon": "🦊",
+    "role": "Orientation Group Leader",
+    "org": "SEG Freshman Orientation - NYP",
+    "date": "Apr 2019"
+  },
+
+  {
+    "icon": "🦊",
+    "role": "Peer Tutor & Co-Founder",
+    "org": "SEG Peer Tutoring Club - NYP",
+    "date": "Oct 2018 - Mar 2019"
+  },
+  
+  {
+    "icon": "🦊",
+    "role": "Welare & Logistics Main Commitee",
+    "org": "Enitio 2025 Freshman Orientation - NTU",
+    "date": "Aug 2024 - Aug 2025"
+  },
+
+  {
+    "icon": "🦊",
+    "role": "Welare & Logistics Sub Commitee",
+    "org": "Enitio 2026 Freshman Orientation - NTU",
+    "date": "Aug 2025 - Aug 2027"
   }
+
 ]
