@@ -1,5 +1,5 @@
 [
-  { "file": "photo1.jpg", "title": "Sunset at East Coast", "location": "Singapore" },
-  { "file": "photo2.jpg", "title": "Rainy Day", "location": "Orchard" },
-  { "file": "photo3.jpg", "title": "Urban Geometry", "location": "CBD" }
+  { "file": "photo1.jpg" },
+  { "file": "photo2.jpg" },
+  { "file": "photo3.jpg" }
 ]

@@ -15,10 +15,9 @@
   <div class="cursor-dot" id="cursorDot"></div>
 
   <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <div id="lightbox" class="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">✕</button>
     <img id="lightboxImg" src="" alt="" class="lightbox-img" />
-    <div id="lightboxCaption" class="lightbox-caption"></div>
   </div>
 
   <main class="card-wrapper">
@@ -43,20 +42,11 @@
 
       <div class="page-content">
         <h2 class="page-title">Gallery<span class="exclaim">.</span></h2>
-        <p class="page-subtitle">Photos I've taken.</p>
         <div class="dashed-divider"></div>
 
-        <!-- Filter bar -->
-        <div id="filterBar" class="gallery-filter-bar" style="display:none">
-          <button class="gallery-filter-btn active" data-location="all">All</button>
-        </div>
+        <div id="photoCount" class="gallery-count"></div>
 
-        <!-- Count -->
-        <div id="photoCount" class="gallery-count">Loading...</div>
-
-        <!-- Grid — populated by JS -->
         <div id="photoGrid" class="art-grid gallery-grid">
-          <!-- Skeleton placeholders while loading -->
           <div class="art-card skeleton-card"></div>
           <div class="art-card skeleton-card"></div>
           <div class="art-card skeleton-card"></div>
@@ -64,7 +54,6 @@
           <div class="art-card skeleton-card"></div>
           <div class="art-card skeleton-card"></div>
         </div>
-
       </div>
 
       <div class="card-footer">@foxfoxesfox</div>
@@ -73,100 +62,50 @@
 
   <script src="script.js"></script>
   <script>
-    // ── Lightbox ──────────────────────────────────────────
-    function openLightbox(src, caption) {
-      document.getElementById('lightboxImg').src = src;
-      document.getElementById('lightboxCaption').textContent = caption;
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-    // ── Arrow key navigation in lightbox ─────────────────
     let currentIndex = 0;
     let currentPhotos = [];
 
     function openLightboxAt(index) {
       currentIndex = index;
-      const p = currentPhotos[index];
-      const caption = [p.title, p.location].filter(Boolean).join(' · ');
-      openLightbox('assets/photos/' + p.file, caption || p.file);
+      document.getElementById('lightboxImg').src = 'assets/photos/' + currentPhotos[index].file;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox').addEventListener('click', closeLightbox);
 
     document.addEventListener('keydown', e => {
       if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape')     closeLightbox();
       if (e.key === 'ArrowRight') openLightboxAt((currentIndex + 1) % currentPhotos.length);
       if (e.key === 'ArrowLeft')  openLightboxAt((currentIndex - 1 + currentPhotos.length) % currentPhotos.length);
     });
 
-    // ── Load photos from manifest ─────────────────────────
     async function loadGallery() {
       const grid  = document.getElementById('photoGrid');
       const count = document.getElementById('photoCount');
-      const filterBar = document.getElementById('filterBar');
 
-      let photos = [];
       try {
         const res = await fetch('assets/photos/photos.json');
-        if (!res.ok) throw new Error('manifest not found');
-        photos = await res.json();
-      } catch (err) {
-        grid.innerHTML = `<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.82rem;grid-column:1/-1;padding:20px 0">
-          No photos found. Add images to <code>assets/photos/</code> and update <code>photos.json</code>.
-        </p>`;
-        count.textContent = '';
+        if (!res.ok) throw new Error();
+        currentPhotos = await res.json();
+      } catch {
+        grid.innerHTML = `<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.82rem;grid-column:1/-1;padding:20px 0">No photos found. Add images to <code>assets/photos/</code> and update <code>photos.json</code>.</p>`;
         return;
       }
 
-      currentPhotos = photos;
-      count.textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''}`;
+      count.textContent = `${currentPhotos.length} photo${currentPhotos.length !== 1 ? 's' : ''}`;
 
-      // Build location filter buttons if locations exist
-      const locations = [...new Set(photos.map(p => p.location).filter(Boolean))];
-      if (locations.length > 1) {
-        filterBar.style.display = 'flex';
-        locations.forEach(loc => {
-          const btn = document.createElement('button');
-          btn.className = 'gallery-filter-btn';
-          btn.dataset.location = loc;
-          btn.textContent = loc;
-          filterBar.appendChild(btn);
-        });
-        filterBar.addEventListener('click', e => {
-          const btn = e.target.closest('.gallery-filter-btn');
-          if (!btn) return;
-          filterBar.querySelectorAll('.gallery-filter-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const loc = btn.dataset.location;
-          grid.querySelectorAll('.art-card:not(.skeleton-card)').forEach(card => {
-            card.style.display = (loc === 'all' || card.dataset.location === loc) ? '' : 'none';
-          });
-        });
-      }
-
-      // Render cards
       grid.innerHTML = '';
-      photos.forEach((photo, i) => {
-        const caption = [photo.title, photo.location].filter(Boolean).join(' · ');
+      currentPhotos.forEach((photo, i) => {
         const card = document.createElement('div');
         card.className = 'art-card gallery-card';
-        card.dataset.location = photo.location || '';
-        card.innerHTML = `
-          <img
-            src="assets/photos/${photo.file}"
-            alt="${photo.title || photo.file}"
-            loading="lazy"
-            class="art-img gallery-img"
-          />
-          <div class="art-overlay">
-            ${photo.title    ? `<div class="art-title">${photo.title}</div>` : ''}
-            ${photo.location ? `<div class="art-sub">${photo.location}</div>` : ''}
-          </div>
-        `;
+        card.innerHTML = `<img src="assets/photos/${photo.file}" alt="" loading="lazy" class="art-img gallery-img" />`;
         card.addEventListener('click', () => openLightboxAt(i));
         grid.appendChild(card);
       });
