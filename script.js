@@ -36,9 +36,9 @@ const currentIconEl = document.getElementById('currently-icon');
 
 if (currentTextEl && currentIconEl) {
   const statuses = [
-    { icon: '📚', text: 'Year 3 @ NTU' },
-    { icon: '🔨', text: 'Looking for Internship (PA)' },
-    { icon: '🎮', text: 'Playing Overwatch' }
+    { icon: '🕺', text: 'Learning to dance better' },
+    { icon: '🔨', text: 'Looking to build more personal projects' },
+    { icon: '💻', text: 'Vibe coding my own iOS application' }
   ];
   let idx = 0;
 
